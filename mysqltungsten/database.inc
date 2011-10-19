@@ -41,8 +41,16 @@ class DatabaseConnection_mysqltungsten extends DatabaseConnection_mysql {
     }
 
     // Work around a tungsten-replicator bug that prevents replication with
-    // ANSI_QUOTES sql_mode. Here we unset ANSI_QUOTES.
-    $this->exec("SET sql_mode='REAL_AS_FLOAT,PIPES_AS_CONCAT,IGNORE_SPACE,STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER'");
+    // ANSI_QUOTES sql_mode. Here we unset ANSI_QUOTES and allow init_commands
+    // to be overridden.
+    $connection_options += array(
+      'init_commands' => array(),
+    );
+    $connection_options['init_commands'] += array(
+      'sql_mode' => "SET sql_mode='REAL_AS_FLOAT,PIPES_AS_CONCAT,IGNORE_SPACE,STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER'",
+    );
+    // Set connection options.
+    $this->exec(implode('; ', $connection_options['init_commands']));
   }
   function driver() {
     return 'mysqltungsten';
