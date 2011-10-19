@@ -1,0 +1,23 @@
+Drupal 7 hardcode's a specific set of sql_mode options in it's MySQL PDO
+driver.  Tungsten replicator incorrectly escapes queries using ANSI_QUOTES,
+which causes replication to break with D7+MySQL+Tungsten.
+
+This driver offers a work around that removes ANSI_QUOTES from the default
+sql_mode.  It can be enabled by switching to the mysqltungsten database driver
+in settings.php:
+
+$databases = array (
+  'default' =>
+  array (
+    'default' =>
+    array (
+      'database' => '',
+      'username' => '',
+      'password' => '',
+      'host' => '',
+      'port' => '',
+      'driver' => 'mysqltungsten',
+      'prefix' => '',
+    ),
+  ),
+);
