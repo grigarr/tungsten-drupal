@@ -3,9 +3,9 @@ driver.  Tungsten replicator incorrectly escapes queries using ANSI_QUOTES,
 which causes replication to break with D7+MySQL+Tungsten.
 
 This driver offers a work around that removes ANSI_QUOTES from the default
-sql_mode.  Enable the driver by copying the mysqltungsten directory to
-includes/database/mysql and switching to the mysqltungsten database driver in
-settings.php:
+sql_mode.  Enable the driver by copying the contents of the mysqltungsten
+directory to includes/database/mysqltungsten and switching to the mysqltungsten
+database driver in settings.php:
 
 $databases = array (
   'default' =>
