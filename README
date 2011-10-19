@@ -19,6 +19,14 @@ $databases = array (
       'port' => '',
       'driver' => 'mysqltungsten',
       'prefix' => '',
+      // The init_commands array allows arbitrary commands be executed for each
+      // database connection. sql_mode can also be overridden here.
+      'init_commands' =>
+      array (
+        sql_mode => "SET sql_mode='TRADITIONAL'",
+        other_init_command => "SET SQL_BIG_SELECTS=1",
+        ...
+      ),
     ),
   ),
 );
